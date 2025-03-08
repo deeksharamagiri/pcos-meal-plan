@@ -1,12 +1,587 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8" />
-    <title>PCOS-Friendly App</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCOS Care Companion</title>
+    <style>
+        /* General Styles */
+        :root {
+            --primary-color: #ff69b4;
+            --secondary-color: #9370db;
+            --accent-color: #fcddec;
+            --text-color: #333;
+            --bg-gradient: linear-gradient(135deg, #ffe6f0, #f5e6ff);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            color: var(--text-color);
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Reusable Styles */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .header {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 25px;
+            margin-bottom: 2rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            transition: background 0.3s ease;
+        }
+
+        .header:hover {
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .header h1 {
+            color: var(--primary-color);
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            animation: pulse 2s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from {
+                transform: scale(1);
+            }
+
+            to {
+                transform: scale(1.05);
+            }
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+
+        .button {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .primary-btn {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .secondary-btn {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Form Styles */
+        .signup-form {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 3rem;
+            border-radius: 25px;
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.75rem;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="password"],
+        input[type="date"] {
+            width: 100%;
+            padding: 1.2rem;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        input[type="password"]:focus,
+        input[type="date"]:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        /* Dashboard Styles */
+        .dashboard-nav {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            border-radius: 25px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-card h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Cycle Tracker Styles */
+        #cycle-tracker p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        /* Image Upload Styles */
+        .upload-container {
+            border: 3px dashed var(--primary-color);
+            padding: 3rem;
+            text-align: center;
+            border-radius: 25px;
+            margin: 2rem 0;
+            transition: border-color 0.3s ease;
+        }
+
+        .upload-container:hover {
+            border-color: var(--secondary-color);
+        }
+
+        #image-preview {
+            max-width: 400px;
+            margin: 2rem auto;
+            display: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Exercise Suggestions */
+        .exercise-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .exercise-item {
+            padding: 1.5rem;
+            background: var(--accent-color);
+            margin-bottom: 1rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .exercise-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Recipe Suggester Styles */
+        #recipe-suggester label {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        #recipe-suggester input[type="text"] {
+            width: 100%;
+            padding: 1.2rem;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        #recipe-suggester button {
+            background: var(--secondary-color);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        #recipe-suggester button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        #recipe-suggester .recipe {
+            background: var(--accent-color);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .auth-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .dashboard-nav {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .feature-card {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Page Styles (Hidden by Default) */
+        .page {
+            display: none;
+        }
+
+        /* Active Page Style (Displayed) */
+        .active-page {
+            display: block;
+        }
+    </style>
 </head>
+
 <body>
-    <div id="root"></div>
+    <!-- Home Page -->
+    <div id="home-page" class="page active-page container">
+        <div class="header">
+            <h1>PCOS Care Companion</h1>
+            <div class="auth-buttons">
+                <button class="button primary-btn" onclick="showPage('login-page')">Login</button>
+                <button class="button secondary-btn" onclick="showPage('signup-page')">Sign Up</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Page -->
+    <div id="login-page" class="page container">
+        <div class="header">
+            <h1>Login</h1>
+        </div>
+        <form class="signup-form" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label>Username:</label>
+                <input type="text" required>
+            </div>
+            <div class="form-group">
+                <label>Password:</label>
+                <input type="password" required>
+            </div>
+            <button type="submit" class="button primary-btn">Login</button>
+        </form>
+    </div>
+
+    <!-- Signup Page -->
+    <div id="signup-page" class="page container">
+        <div class="header">
+            <h1>Create Your Account</h1>
+        </div>
+        <form class="signup-form" onsubmit="handleSignup(event)">
+            <div class="form-group">
+                <label>Username:</label>
+                <input type="text" required>
+            </div>
+            <div class="form-group">
+                <label>Password:</label>
+                <input type="password" required>
+            </div>
+            <div class="form-group">
+                <label>Confirm Password:</label>
+                <input type="password" required>
+            </div>
+            <div class="form-group">
+                <label>Name:</label>
+                <input type="text" required>
+            </div>
+            <div class="form-group">
+                <label>Email:</label>
+                <input type="text" required>
+            </div>
+            <div class="form-group">
+                <label>Phone Number:</label>
+                <input type="number" required>
+            </div>
+            <div class="form-group">
+                <label>Age:</label>
+                <input type="number" required>
+            </div>
+            <div class="form-group">
+                <label>Weight (kg):</label>
+                <input type="number" step="0.1" required>
+            </div>
+            <div class="form-group">
+                <label>Choose Period Date:</label>
+                <input type="date" required>
+            </div>
+            <div class="form-group">
+                <label>Cycle Length (days):</label>
+                <input type="number" required>
+            </div>
+            <button type="submit" class="button primary-btn">Complete Signup</button>
+        </form>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard-page" class="page container">
+        <div class="header">
+            <h1>Welcome Back, [User]</h1>
+        </div>
+
+        <nav class="dashboard-nav">
+            <button class="button secondary-btn" onclick="showFeature('cycle-tracker')">Cycle Tracker</button>
+            <button class="button secondary-btn" onclick="showFeature('restaurant-helper')">Restaurant Helper</button>
+            <button class="button secondary-btn" onclick="showFeature('recipe-suggester')">Recipe Suggester</button>
+            <button class="button secondary-btn" onclick="showFeature('exercise-planner')">Exercise Planner</button>
+        </nav>
+
+        <!-- Cycle Tracker -->
+        <div id="cycle-tracker" class="feature-card">
+            <h2>Cycle Tracker</h2>
+            <p id="cycle-phase-display">Current Cycle Phase: Follicular Phase</p>
+            <p id="dietary-recommendations">Dietary Recommendations: Focus on iron-rich foods.</p>
+            </div>
+
+        <!-- Restaurant Helper -->
+        <div id="restaurant-helper" class="feature-card" style="display: none;">
+            <h2>PCOS-Friendly Restaurant Helper</h2>
+            <div class="upload-container">
+                <input type="file" id="menu-upload" accept="image/*" onchange="handleMenuUpload(event)">
+                <p>Upload restaurant menu photo</p>
+            </div>
+            <img id="menu-preview" src="#" alt="Menu Preview" style="display: none;">
+            <div id="analysis-results"></div>
+        </div>
+
+        <!-- Recipe Suggester -->
+        <div id="recipe-suggester" class="feature-card" style="display: none;">
+            <h2>Recipe Suggester</h2>
+            <label for="vegetable-input">Enter Available Vegetables (comma-separated):</label>
+            <input type="text" id="vegetable-input" name="vegetable-input">
+            <button onclick="suggestRecipes()">Suggest Recipes</button>
+            <div id="meal-plan-results"></div>
+        </div>
+
+        <!-- Exercise Planner -->
+        <div id="exercise-planner" class="feature-card" style="display: none;">
+            <h2>Exercise Suggestions</h2>
+            <select id="symptom-selector" onchange="updateExercises()">
+                <option value="cramps">Menstrual Cramps</option>
+                <option value="fatigue">Fatigue</option>
+                <option value="bloating">Bloating</option>
+            </select>
+            <ul class="exercise-list" id="exercise-list">
+                <!-- Exercise suggestions will be dynamically updated here -->
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Page Navigation
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active-page');
+            });
+            const page = document.getElementById(pageId);
+            if (page) {
+                page.classList.add('active-page');
+            } else {
+                console.error(`Page with ID '${pageId}' not found.`);
+            }
+        }
+
+        function showFeature(featureId) {
+            document.querySelectorAll('.feature-card').forEach(feature => {
+                feature.style.display = 'none';
+            });
+            document.getElementById(featureId).style.display = 'block';
+        }
+
+        // Form Handling
+        function handleSignup(event) {
+            event.preventDefault();
+            // Add signup logic here (e.g., send data to the server)
+            showPage('dashboard-page');
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            // Add login logic here (e.g., verify credentials with the server)
+            showPage('dashboard-page');
+        }
+
+
+        // Image Upload Handling
+        function handleMenuUpload(event) {
+            const file = event.target.files[0];
+            const preview = document.getElementById('menu-preview');
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+                analyzeMenu(file);
+            }
+
+            reader.readAsDataURL(file);
+        }
+
+        function analyzeMenu(file) {
+            // Implement API call to analyze menu
+            document.getElementById('analysis-results').innerHTML = `
+                <p>AI Analysis Results:</p>
+                <p>✅ 3 PCOS-friendly options found</p>
+                <p>❌ 2 high-GI items flagged</p>
+            `;
+        }
+
+        function suggestRecipes() {
+            const vegetables = document.getElementById('vegetable-input').value;
+            // Implement logic to suggest recipes based on vegetable input
+
+            // Mock Recipe Data (replace with your actual recipe data)
+            const recipes = {
+                "Spinach and Cabbage Stir-Fry": {
+                    ingredients: ["spinach", "cabbage", "onion", "garlic", "ginger", "soy sauce"],
+                    instructions: "Stir-fry all ingredients until tender."
+                },
+                "Cabbage and Onion Soup": {
+                    ingredients: ["cabbage", "onion", "broth", "carrots", "celery"],
+                    instructions: "Simmer all ingredients until vegetables are soft."
+                },
+                "Spinach Smoothie": {
+                    ingredients: ["spinach", "banana", "almond milk", "chia seeds"],
+                    instructions: "Blend all ingredients until smooth."
+                }
+            };
+
+            // Suggest recipes
+            let recipeSuggestions = "";
+            for (const recipeName in recipes) {
+                if (recipes.hasOwnProperty(recipeName)) {
+                    if (vegetables.toLowerCase().split(',').every(veg => recipes[recipeName].ingredients.includes(veg.trim()))) {
+                        recipeSuggestions += `<div class="recipe">
+                                                <h3>${recipeName}</h3>
+                                                <p><strong>Ingredients:</strong> ${recipes[recipeName].ingredients.join(", ")}</p>
+                                                <p><strong>Instructions:</strong> ${recipes[recipeName].instructions}</p>
+                                              </div>`;
+                    }
+                }
+            }
+            // Display
+            document.getElementById('meal-plan-results').innerHTML = recipeSuggestions || `<p>No recipes found for ${vegetables}.</p>`;
+
+        }
+
+        function updateExercises() {
+            const symptom = document.getElementById('symptom-selector').value;
+            let exercises = [];
+
+            if (symptom === 'cramps') {
+                exercises = ["Yoga: Child's Pose", "Light Walking", "Pelvic Stretches"];
+            } else if (symptom === 'fatigue') {
+                exercises = ["Gentle Stretching", "Short Walks", "Deep Breathing"];
+            } else if (symptom === 'bloating') {
+                exercises = ["Yoga: Twisting Poses", "Brisk Walking", "Abdominal Massage"];
+            }
+
+            const exerciseList = document.getElementById('exercise-list');
+            exerciseList.innerHTML = ''; // Clear previous list
+            exercises.forEach(exercise => {
+                const listItem = document.createElement('li');
+                listItem.classList.add('exercise-item');
+                listItem.textContent = exercise;
+                exerciseList.appendChild(listItem);
+            });
+        }
+
+        // Cycle Tracker - Show Current Phase Only
+        function updateCyclePhase() {
+        // Replace this with actual logic to determine the current cycle phase from user data
+        const cyclePhase = "Follicular Phase"; // Example
+        const dietaryRecommendations = "Focus on iron-rich foods, lean protein and complex carbohydrates."; // Example
+
+        document.getElementById('cycle-phase-display').textContent = `Current Cycle Phase: ${cyclePhase}`;
+        document.getElementById('dietary-recommendations').textContent = `Dietary Recommendations: ${dietaryRecommendations}`;
+    }
+
+
+
+        // Initial Setup
+        showPage('home-page');
+        updateCyclePhase(); // Initial call to update cycle phase on dashboard load
+    </script>
 </body>
+
 </html>
 
