@@ -4,33 +4,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PCOS Care Companion</title>
+    <title>VeggieVerse - Your PCOS-Friendly Kitchen</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         /* General Styles */
         :root {
-            --primary-color: #ff69b4;
-            --secondary-color: #9370db;
-            --accent-color: #fcddec;
-            --text-color: #333;
-            --bg-gradient: linear-gradient(135deg, #ffe6f0, #f5e6ff);
+            --primary-color: #880E4F;
+            /* Dark Raspberry */
+            --secondary-color: #D81B60;
+            /* Vivid Raspberry */
+            --accent-color: #F06292;
+            /* Light Raspberry */
+            --text-color: #212121;
+            /* Dark Gray */
+            --bg-gradient: linear-gradient(135deg, #FCE4EC, #F8BBD0);
+            /* Soft Pink Gradient */
+            --font-main: 'Poppins', sans-serif;
+            --font-cursive: 'Dancing Script', cursive;
         }
 
         body {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: var(--font-main);
             background: var(--bg-gradient);
             min-height: 100vh;
             color: var(--text-color);
-            overflow-x: hidden; /* Prevent horizontal scroll */
+            overflow-x: hidden;
         }
 
         /* Animations */
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(-20px);
+                transform: translateY(-30px);
             }
 
             to {
@@ -39,62 +50,67 @@
             }
         }
 
+        @keyframes pulseHighlight {
+            0% {
+                background-color: rgba(240, 98, 146, 0.3);
+            }
+
+            100% {
+                background-color: rgba(240, 98, 146, 0);
+            }
+        }
+
         /* Reusable Styles */
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem;
-            animation: fadeIn 0.5s ease-out;
+            padding: 3rem;
+            animation: fadeIn 0.7s ease-out;
         }
 
         .header {
             text-align: center;
-            padding: 2rem;
+            padding: 3rem;
             background: rgba(255, 255, 255, 0.9);
-            border-radius: 25px;
-            margin-bottom: 2rem;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-            transition: background 0.3s ease;
+            border-radius: 30px;
+            margin-bottom: 3rem;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: pulseHighlight 4s infinite alternate;
         }
 
         .header:hover {
-            background: rgba(255, 255, 255, 0.95);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
 
         .header h1 {
             color: var(--primary-color);
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-            animation: pulse 2s infinite alternate;
-        }
-
-        @keyframes pulse {
-            from {
-                transform: scale(1);
-            }
-
-            to {
-                transform: scale(1.05);
-            }
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
+            font-family: var(--font-cursive);
+            letter-spacing: 1.5px;
         }
 
         .auth-buttons {
             display: flex;
-            gap: 1.5rem;
+            gap: 2rem;
             justify-content: center;
         }
 
         .button {
-            padding: 1rem 2rem;
+            padding: 1.2rem 2.5rem;
             border: none;
-            border-radius: 30px;
+            border-radius: 35px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             font-weight: 600;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.2px;
+            font-size: 1.1rem;
+            outline: none;
         }
 
         .primary-btn {
@@ -108,29 +124,30 @@
         }
 
         .button:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
         }
 
         /* Form Styles */
         .signup-form {
             background: rgba(255, 255, 255, 0.9);
-            padding: 3rem;
-            border-radius: 25px;
-            max-width: 600px;
+            padding: 4rem;
+            border-radius: 30px;
+            max-width: 700px;
             margin: 0 auto;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
         }
 
         .form-group {
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
         }
 
         label {
             display: block;
-            margin-bottom: 0.75rem;
+            margin-bottom: 0.8rem;
             color: var(--text-color);
             font-weight: 500;
+            font-size: 1.2rem;
         }
 
         input[type="text"],
@@ -138,11 +155,12 @@
         input[type="password"],
         input[type="date"] {
             width: 100%;
-            padding: 1.2rem;
+            padding: 1.4rem;
             border: 2px solid #ddd;
-            border-radius: 12px;
-            font-size: 1.1rem;
+            border-radius: 15px;
+            font-size: 1.2rem;
             transition: border-color 0.3s ease;
+            outline: none;
         }
 
         input[type="text"]:focus,
@@ -150,135 +168,163 @@
         input[type="password"]:focus,
         input[type="date"]:focus {
             border-color: var(--primary-color);
-            outline: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         /* Dashboard Styles */
         .dashboard-nav {
             display: flex;
-            gap: 1.5rem;
-            margin-bottom: 3rem;
+            gap: 2rem;
+            margin-bottom: 4rem;
             flex-wrap: wrap;
             justify-content: center;
         }
 
         .feature-card {
             background: rgba(255, 255, 255, 0.9);
-            padding: 2rem;
-            border-radius: 25px;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 3rem;
+            border-radius: 30px;
+            margin-bottom: 3rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            transform: translateY(-7px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
         }
 
         .feature-card h2 {
             color: var(--secondary-color);
-            margin-bottom: 1.5rem;
-            font-size: 2rem;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.1);
+            font-family: var(--font-cursive);
         }
 
         /* Cycle Tracker Styles */
         #cycle-tracker p {
-            font-size: 1.2rem;
-            line-height: 1.6;
-            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            animation: fadeIn 1s ease-out;
         }
 
-        /* Image Upload Styles */
+        /* Restaurant Helper Styles */
         .upload-container {
-            border: 3px dashed var(--primary-color);
-            padding: 3rem;
+            border: 3px dashed var(--accent-color);
+            padding: 4rem;
             text-align: center;
-            border-radius: 25px;
-            margin: 2rem 0;
+            border-radius: 30px;
+            margin: 2.5rem 0;
             transition: border-color 0.3s ease;
         }
 
         .upload-container:hover {
             border-color: var(--secondary-color);
+            transform: scale(1.03);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
         }
 
-        #image-preview {
-            max-width: 400px;
-            margin: 2rem auto;
+        #menu-preview {
+            max-width: 500px;
+            margin: 3rem auto;
             display: none;
+            border-radius: 20px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Recipe Suggester Styles */
+        #recipe-suggester label {
+            font-size: 1.3rem;
+            margin-bottom: 1.2rem;
+            display: block;
+        }
+
+        #recipe-suggester input[type="text"] {
+            width: 100%;
+            padding: 1.4rem;
+            border: 2px solid #ddd;
             border-radius: 15px;
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+        }
+
+        #recipe-suggester button {
+            background: var(--secondary-color);
+            color: white;
+            padding: 1.2rem 2.5rem;
+            border: none;
+            border-radius: 35px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            font-size: 1.1rem;
+        }
+
+        #recipe-suggester button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+        }
+
+        #recipe-suggester .recipe {
+            background: var(--accent-color);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        /* Exercise Suggestions */
+        #recipe-suggester .recipe h3 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Exercise Planner Styles */
+        #exercise-planner select {
+            width: 100%;
+            padding: 1.4rem;
+            border: 2px solid #ddd;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        #exercise-planner select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
         .exercise-list {
             list-style: none;
             padding: 0;
         }
 
         .exercise-item {
-            padding: 1.5rem;
-            background: var(--accent-color);
-            margin-bottom: 1rem;
-            border-radius: 12px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 1.7rem;
+            background: rgba(240, 98, 146, 0.2);
+            margin-bottom: 1.2rem;
+            border-radius: 15px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            font-size: 1.2rem;
         }
 
         .exercise-item:hover {
-            transform: translateX(5px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Recipe Suggester Styles */
-        #recipe-suggester label {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            display: block;
-        }
-
-        #recipe-suggester input[type="text"] {
-            width: 100%;
-            padding: 1.2rem;
-            border: 2px solid #ddd;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-        }
-
-        #recipe-suggester button {
-            background: var(--secondary-color);
-            color: white;
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        #recipe-suggester button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        #recipe-suggester .recipe {
-            background: var(--accent-color);
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin-bottom: 1rem;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transform: translateX(7px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
             .header h1 {
-                font-size: 2.5rem;
+                font-size: 3rem;
             }
 
             .auth-buttons {
@@ -287,7 +333,7 @@
             }
 
             .container {
-                padding: 1rem;
+                padding: 2rem;
             }
 
             .dashboard-nav {
@@ -296,7 +342,11 @@
             }
 
             .feature-card {
-                padding: 1.5rem;
+                padding: 2rem;
+            }
+
+            .signup-form {
+                padding: 3rem;
             }
         }
 
@@ -316,7 +366,8 @@
     <!-- Home Page -->
     <div id="home-page" class="page active-page container">
         <div class="header">
-            <h1>PCOS Care Companion</h1>
+            <h1 class="animate__animated animate__heartBeat">VeggieVerse</h1>
+            <p style="font-size: 1.4rem;">Your PCOS-Friendly Kitchen</p>
             <div class="auth-buttons">
                 <button class="button primary-btn" onclick="showPage('login-page')">Login</button>
                 <button class="button secondary-btn" onclick="showPage('signup-page')">Sign Up</button>
@@ -409,8 +460,8 @@
         <div id="cycle-tracker" class="feature-card">
             <h2>Cycle Tracker</h2>
             <p id="cycle-phase-display">Current Cycle Phase: Follicular Phase</p>
-            <p id="dietary-recommendations">Dietary Recommendations: Focus on iron-rich foods.</p>
-            </div>
+            <p id="dietary-recommendations">Dietary Recommendations: Focus on iron-rich foods, lean protein and complex carbohydrates.</p>
+        </div>
 
         <!-- Restaurant Helper -->
         <div id="restaurant-helper" class="feature-card" style="display: none;">
@@ -420,13 +471,21 @@
                 <p>Upload restaurant menu photo</p>
             </div>
             <img id="menu-preview" src="#" alt="Menu Preview" style="display: none;">
-            <div id="analysis-results"></div>
+            <div id="analysis-results">
+                <button onclick="analyzeMenu()">Analyze Menu</button>
+            </div>
         </div>
 
         <!-- Recipe Suggester -->
         <div id="recipe-suggester" class="feature-card" style="display: none;">
             <h2>Recipe Suggester</h2>
-            <label for="vegetable-input">Enter Available Vegetables (comma-separated):</label>
+
+            <div class="upload-container">
+                <input type="file" id="vegetable-image-upload" accept="image/*" onchange="handleVegetableImageUpload(event)">
+                <p>Upload a photo of your vegetables</p>
+                <img id="vegetable-image-preview" src="#" alt="Vegetable Preview" style="max-width: 300px; margin-top: 1rem; display: none;">
+            </div>
+            <label for="vegetable-input">Or, enter available vegetables (comma-separated):</label>
             <input type="text" id="vegetable-input" name="vegetable-input">
             <button onclick="suggestRecipes()">Suggest Recipes</button>
             <div id="meal-plan-results"></div>
@@ -441,11 +500,12 @@
                 <option value="bloating">Bloating</option>
             </select>
             <ul class="exercise-list" id="exercise-list">
-                <!-- Exercise suggestions will be dynamically updated here -->
             </ul>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@v2.1.5/dist/tesseract.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <script>
         // Page Navigation
         function showPage(pageId) {
@@ -480,8 +540,7 @@
             showPage('dashboard-page');
         }
 
-
-        // Image Upload Handling
+        // Restaurant Helper (Image Analysis)
         function handleMenuUpload(event) {
             const file = event.target.files[0];
             const preview = document.getElementById('menu-preview');
@@ -490,69 +549,139 @@
             reader.onload = function(e) {
                 preview.src = e.target.result;
                 preview.style.display = 'block';
-                analyzeMenu(file);
             }
 
             reader.readAsDataURL(file);
         }
 
-        function analyzeMenu(file) {
-            // Implement API call to analyze menu
-            document.getElementById('analysis-results').innerHTML = `
-                <p>AI Analysis Results:</p>
-                <p>✅ 3 PCOS-friendly options found</p>
-                <p>❌ 2 high-GI items flagged</p>
-            `;
-        }
-
-        function suggestRecipes() {
-            const vegetables = document.getElementById('vegetable-input').value;
-            // Implement logic to suggest recipes based on vegetable input
-
-            // Mock Recipe Data (replace with your actual recipe data)
-            const recipes = {
-                "Spinach and Cabbage Stir-Fry": {
-                    ingredients: ["spinach", "cabbage", "onion", "garlic", "ginger", "soy sauce"],
-                    instructions: "Stir-fry all ingredients until tender."
-                },
-                "Cabbage and Onion Soup": {
-                    ingredients: ["cabbage", "onion", "broth", "carrots", "celery"],
-                    instructions: "Simmer all ingredients until vegetables are soft."
-                },
-                "Spinach Smoothie": {
-                    ingredients: ["spinach", "banana", "almond milk", "chia seeds"],
-                    instructions: "Blend all ingredients until smooth."
-                }
-            };
-
-            // Suggest recipes
-            let recipeSuggestions = "";
-            for (const recipeName in recipes) {
-                if (recipes.hasOwnProperty(recipeName)) {
-                    if (vegetables.toLowerCase().split(',').every(veg => recipes[recipeName].ingredients.includes(veg.trim()))) {
-                        recipeSuggestions += `<div class="recipe">
-                                                <h3>${recipeName}</h3>
-                                                <p><strong>Ingredients:</strong> ${recipes[recipeName].ingredients.join(", ")}</p>
-                                                <p><strong>Instructions:</strong> ${recipes[recipeName].instructions}</p>
-                                              </div>`;
-                    }
-                }
+        async function analyzeMenu() {
+            const preview = document.getElementById('menu-preview');
+            if (!preview.src || preview.src === "") {
+                document.getElementById('analysis-results').innerHTML = "<p>Please upload a menu photo first.</p>";
+                return;
             }
-            // Display
-            document.getElementById('meal-plan-results').innerHTML = recipeSuggestions || `<p>No recipes found for ${vegetables}.</p>`;
 
+            document.getElementById('analysis-results').innerHTML = "<p>Analyzing menu...</p>";
+
+            try {
+                const {
+                    data: {
+                        text
+                    }
+                } = await Tesseract.recognize(
+                    preview.src,
+                    'eng', {
+                        logger: m => console.log(m)
+                    }
+                );
+
+                console.log("OCR Result:", text); // Debug OCR result
+
+                // Simulate analysis logic (replace with actual API or local analysis)
+                const pcosFriendlyOptions = ["Salmon Salad", "Lentil Soup", "Avocado Toast"]; // Example
+                const highGiItems = ["White Rice", "Pasta", "Sugary Drinks"]; // Example
+
+                let analysisResults = "<p><strong>Menu Analysis:</strong></p>";
+                analysisResults += "<p>Potential PCOS-Friendly Options:</p><ul>";
+                pcosFriendlyOptions.forEach(option => analysisResults += `<li>${option}</li>`);
+                analysisResults += "</ul>";
+                analysisResults += "<p>High-GI Items to Consider:</p><ul>";
+                highGiItems.forEach(item => analysisResults += `<li>${item}</li>`);
+                analysisResults += "</ul>";
+
+                document.getElementById('analysis-results').innerHTML = analysisResults;
+            } catch (error) {
+                console.error("OCR Error:", error);
+                document.getElementById('analysis-results').innerHTML = "<p>Error analyzing menu. Please try again.</p>";
+            }
+        }
+        let model;
+        let class_names = ["Beans", "Eggplant", "Ladies Finger", "Onion", "Pointed gourd", "Potato"]
+
+        async function handleVegetableImageUpload(event) {
+            const file = event.target.files[0];
+            const preview = document.getElementById('vegetable-image-preview');
+            const reader = new FileReader();
+
+            reader.onload = async function(e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+
+                // Load TensorFlow.js model
+                if (!model) {
+                    model = await tf.loadLayersModel('https://github.com/Harshita1107/PCOS_Care_AI_Recipes/blob/7ff97e742735d858a8aa3ea37922e726001ed0b9/my_model/model.json');
+                }
+
+
+                // Preprocess the image and make a prediction
+                const image = document.createElement('img');
+                image.src = preview.src;
+                image.onload = async function() {
+                    const tensor = tf.browser.fromPixels(image)
+                        .resizeNearestNeighbor([224, 224])
+                        .toFloat()
+                        .expandDims();
+                    const prediction = await model.predict(tensor).data();
+                    const predictedClassIndex = prediction.indexOf(Math.max(...prediction));
+                    const predictedVegetable = class_names[predictedClassIndex];
+
+                    console.log("Predicted Vegetable:", predictedVegetable);
+
+                    // Display results and suggest recipes
+                    let vegetableList = document.getElementById('vegetable-input').value;
+                    vegetableList = vegetableList === '' ? predictedVegetable : vegetableList + ", " + predictedVegetable;
+                    document.getElementById('vegetable-input').value = vegetableList;
+                    suggestRecipes();
+                };
+            }
+            reader.readAsDataURL(file);
         }
 
+        // Recipe Suggester
+        async function suggestRecipes() {
+            const vegetables = document.getElementById('vegetable-input').value;
+            document.getElementById('meal-plan-results').innerHTML = "<p>Generating recipe ideas...</p>";
+
+            try {
+                const response = await fetch("https://api.openai.com/v1/completions", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer YOUR_OPENAI_API_KEY" // Replace with your actual OpenAI API key
+                    },
+                    body: JSON.stringify({
+                        model: "text-davinci-003",
+                        prompt: `Generate a PCOS-friendly recipe based on these ingredients: ${vegetables}. Include ingredients, instructions, and nutritional information per serving.`,
+                        max_tokens: 300
+                    })
+                });
+
+                const data = await response.json();
+                console.log("API response", data)
+
+                if (response.ok) {
+                    const recipeText = data.choices[0].text;
+                    document.getElementById('meal-plan-results').innerHTML = `<div class="recipe">${recipeText}</div>`;
+                } else {
+                    document.getElementById('meal-plan-results').innerHTML = `<p>Error generating recipe. Please try again.</p><p>Error details: ${data.error.message}</p>`;
+                }
+            } catch (error) {
+                console.error("OpenAI API Error:", error);
+                document.getElementById('meal-plan-results').innerHTML = "<p>Error generating recipe. Please try again.</p>";
+            }
+        }
+
+        // Exercise Planner
         function updateExercises() {
             const symptom = document.getElementById('symptom-selector').value;
             let exercises = [];
 
             if (symptom === 'cramps') {
-                exercises = ["Yoga: Child's Pose", "Light Walking", "Pelvic Stretches"];
+                exercises = ["Yoga: Child's Pose", "Light Walking", "Pelvic Stretches - Gentle, relaxing poses to ease discomfort"];
             } else if (symptom === 'fatigue') {
-                exercises = ["Gentle Stretching", "Short Walks", "Deep Breathing"];
+                exercises = ["Gentle Stretching - Improves circulation and energy", "Short Walks - Boosts mood and combats fatigue", "Deep Breathing - Increases oxygen flow"];
             } else if (symptom === 'bloating') {
-                exercises = ["Yoga: Twisting Poses", "Brisk Walking", "Abdominal Massage"];
+                exercises = ["Yoga: Twisting Poses - Aids digestion", "Brisk Walking - Reduces water retention", "Abdominal Massage - Stimulates bowel movement"];
             }
 
             const exerciseList = document.getElementById('exercise-list');
@@ -567,15 +696,21 @@
 
         // Cycle Tracker - Show Current Phase Only
         function updateCyclePhase() {
-        // Replace this with actual logic to determine the current cycle phase from user data
-        const cyclePhase = "Follicular Phase"; // Example
-        const dietaryRecommendations = "Focus on iron-rich foods, lean protein and complex carbohydrates."; // Example
+            // Mock data (replace with dynamic calculation from user data)
+            const cyclePhases = ["Menstrual", "Follicular", "Ovulation", "Luteal"];
+            const currentPhase = cyclePhases[Math.floor(Math.random() * cyclePhases.length)]; // Random phase for demo
+            const dietaryRecommendations = {
+                "Menstrual": "Eat magnesium-rich foods to ease cramps.",
+                "Follicular": "Focus on iron-rich foods and lean protein.",
+                "Ovulation": "Consume foods rich in antioxidants and healthy fats.",
+                "Luteal": "Prioritize complex carbs and anti-inflammatory foods."
+            };
 
-        document.getElementById('cycle-phase-display').textContent = `Current Cycle Phase: ${cyclePhase}`;
-        document.getElementById('dietary-recommendations').textContent = `Dietary Recommendations: ${dietaryRecommendations}`;
-    }
+            const dietaryText = dietaryRecommendations[currentPhase];
 
-
+            document.getElementById('cycle-phase-display').textContent = `Current Cycle Phase: ${currentPhase}`;
+            document.getElementById('dietary-recommendations').textContent = `Dietary Recommendations: ${dietaryText}`;
+        }
 
         // Initial Setup
         showPage('home-page');
@@ -584,4 +719,3 @@
 </body>
 
 </html>
-
